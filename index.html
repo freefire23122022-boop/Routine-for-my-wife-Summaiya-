@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fitness Guide | 14 Exercises</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:#080810;color:#fff;
+}
+header{
+  text-align:center;padding:30px 15px;
+  background:linear-gradient(135deg,#19051c,#65004e,#15051c);
+  border-bottom:2px solid #ff20b5;
+}
+header h1{font-size:29px;color:#ff45c5}
+header p{margin-top:10px;color:#ffd9f2}
+.container{max-width:900px;margin:auto;padding:15px}
+.progress{
+  background:#17131d;border:1px solid #ff31b8;
+  border-radius:15px;padding:18px;margin-bottom:20px;
+}
+.progress h3{color:#ff59c9;margin-bottom:12px}
+.bar{
+  background:#333;height:12px;border-radius:20px;
+  overflow:hidden;margin-top:10px;
+}
+.bar div{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#ff16ad,#ffe34d);
+  transition:.3s;
+}
+.search{
+  width:100%;padding:14px;border-radius:12px;
+  border:1px solid #ff38ba;background:#17131d;
+  color:white;font-size:16px;margin-bottom:18px;
+}
+.card{
+  background:#17131d;border:1px solid #663052;
+  border-radius:17px;margin-bottom:18px;
+  overflow:hidden;
+}
+.cardhead{
+  padding:17px;display:flex;align-items:center;
+  gap:13px;background:linear-gradient(100deg,#3b092e,#21101e);
+}
+.number{
+  background:#ff1eae;color:white;font-size:20px;
+  font-weight:bold;padding:12px;border-radius:12px;
+}
+.cardhead h2{font-size:19px;color:#ff73d3}
+.cardhead p{font-size:12px;color:#ccc;margin-top:5px}
+.content{padding:17px}
+.section{
+  background:#211a26;border-radius:12px;
+  padding:14px;margin-bottom:12px;
+}
+.section h3{color:#ff63c9;margin-bottom:10px;font-size:16px}
+.section p,.section li{
+  font-size:14px;line-height:1.8;color:#eee;
+}
+ul,ol{padding-left:22px}
+.tag{
+  display:inline-block;background:#40132f;
+  color:#ff9cdb;border-radius:20px;
+  padding:6px 10px;margin:4px;font-size:12px;
+}
+button{
+  cursor:pointer;border:0;border-radius:10px;
+  padding:12px 15px;font-weight:bold;
+}
+.done{
+  width:100%;background:#ff24b5;color:white;
+  font-size:15px;margin-top:5px;
+}
+.done.completed{background:#168b51}
+footer{
+  text-align:center;padding:30px;color:#aaa;
+}
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1> FITNESS GUIDE ♡ </h1>
+  <p>14 Exercises | Step-by-Step Workout Guide</p>
+  <p>Learn • Practice • Progress</p>
+</header>
+
+<div class="container">
+
+<div class="progress">
+  <h3>YOUR WORKOUT PROGRESS</h3>
+  <div id="count">0 / 14 Completed</div>
+  <div class="bar"><div id="progressBar"></div></div>
+</div>
+
+<input class="search" id="search"
+placeholder="Search Exercise..." oninput="filterCards()">
+
+<div id="exerciseList"></div>
+
+</div>
+
+<footer>
+  <h3 style="color:#ff54c6">KEEP GOING ♡</h3>
+  <p>Consistency • Patience • Healthy Fitness</p>
+</footer>
+
+<script>
+
+const exercises = [
+
+{
+name:"Waist Twists",
+bn:"কোমর ঘোরানো",
+emoji:"🔄",
+muscles:["Core","Obliques"],
+steps:[
+"সোজা হয়ে দাঁড়ান এবং পা কাঁধের সমান দূরত্বে রাখুন।",
+"দুই হাত বুকের সামনে রাখুন।",
+"ধীরে ধীরে শরীরের ওপরের অংশ ডানদিকে ঘোরান।",
+"আবার মাঝখানে ফিরে বামদিকে ঘোরান।",
+"নিয়ন্ত্রিতভাবে দুই পাশেই করুন।"
+],
+benefits:[
+"কোমরের নড়াচড়ার নমনীয়তা বাড়াতে সাহায্য করে।",
+"কোর পেশি সক্রিয় করে।",
+"শরীরের সমন্বয় উন্নত করে।"
+],
+dose:"১০–১২ বার, প্রতি পাশে।",
+safety:"হঠাৎ করে কোমর মোচড়াবেন না। ব্যথা হলে থামুন।"
+},
+
+{
+name:"Knee Lifts",
+bn:"হাঁটু উঠানো",
+emoji:"🦵",
+muscles:["Core","Hip Flexors","Thighs"],
+steps:[
+"সোজা হয়ে দাঁড়ান।",
+"একটি হাঁটু ধীরে বুকের দিকে তুলুন।",
+"হাত দিয়ে স্বাভাবিকভাবে ভারসাম্য বজায় রাখুন।",
+"পা নামিয়ে অন্য হাঁটু তুলুন।",
+"পালাক্রমে দুই পা দিয়ে করুন।"
+],
+benefits:[
+"পায়ের পেশি সক্রিয় করে।",
+"ভারসাম্য উন্নত করতে সাহায্য করে।",
+"কোর পেশি কাজে লাগায়।"
+],
+dose:"প্রতি পায়ে ১০ বার।",
+safety:"ভারসাম্য হারালে দেয়ালের পাশে দাঁড়িয়ে করুন।"
+},
+
+{
+name:"Squat",
+bn:"স্কোয়াট",
+emoji:"🏋️",
+muscles:["Quadriceps","Glutes","Hamstrings"],
+steps:[
+"পা কাঁধের সমান দূরত্বে রাখুন।",
+"বুক সোজা রেখে ধীরে কোমর পেছনে নিন।",
+"হাঁটু ভাঁজ করে যতটুকু আরামে পারেন নিচে নামুন।",
+"হাঁটু পায়ের আঙুলের দিকেই রাখুন।",
+"পায়ের সাহায্যে ধীরে দাঁড়িয়ে যান।"
+],
+benefits:[
+"পায়ের শক্তি উন্নত করে।",
+"নিতম্ব ও উরুর পেশি শক্তিশালী করে।",
+"দৈনন্দিন চলাফেরায় সাহায্য করে।"
+],
+dose:"৮–১২ বার।",
+safety:"হাঁটুতে ব্যথা হলে থামুন। জোর করে বেশি নিচে যাবেন না।"
+},
+
+{
+name:"Glute Bridge",
+bn:"গ্লুট ব্রিজ",
+emoji:"🌉",
+muscles:["Glutes","Hamstrings","Core"],
+steps:[
+"মেঝেতে চিত হয়ে শুয়ে পড়ুন।",
+"হাঁটু ভাঁজ করে পা মেঝেতে রাখুন।",
+"দুই হাত শরীরের পাশে রাখুন।",
+"পায়ের সাহায্যে কোমর ধীরে ওপরে তুলুন।",
+"কাঁধ থেকে হাঁটু পর্যন্ত একটি সরল রেখা তৈরি করুন।",
+"ধীরে কোমর নিচে নামান।"
+],
+benefits:[
+"নিতম্বের পেশি শক্তিশালী করে।",
+"হিপের নিয়ন্ত্রণ উন্নত করে।",
+"কোর ও পেছনের পেশি সক্রিয় করে।"
+],
+dose:"১০–১২ বার।",
+safety:"কোমর অতিরিক্ত বাঁকাবেন না।"
+},
+
+{
+name:"Knee Push Up",
+bn:"নী পুশ আপ",
+emoji:"💪",
+muscles:["Chest","Triceps","Shoulders","Core"],
+steps:[
+"মেঝেতে হাঁটু রেখে পুশ-আপ পজিশনে আসুন।",
+"দুই হাত কাঁধের চেয়ে সামান্য প্রশস্ত রাখুন।",
+"মাথা থেকে হাঁটু পর্যন্ত শরীর সোজা রাখুন।",
+"কনুই ভাঁজ করে বুক ধীরে নিচে নামান।",
+"হাতের সাহায্যে আবার ওপরে উঠুন।"
+],
+benefits:[
+"বুকের পেশি শক্তিশালী করে।",
+"কাঁধ ও বাহুর শক্তি বাড়ায়।",
+"কোর পেশি সক্রিয় রাখে।"
+],
+dose:"৫–১০ বার।",
+safety:"কোমর ঝুলিয়ে রাখবেন না। কাঁধে ব্যথা হলে থামুন।"
+},
+
+{
+name:"Plank",
+bn:"প্ল্যাঙ্ক",
+emoji:"🧘",
+muscles:["Core","Abs","Shoulders"],
+steps:[
+"মেঝেতে উপুড় হয়ে শুয়ে পড়ুন।",
+"কনুই কাঁধের নিচে রাখুন।",
+"পায়ের আঙুলের ওপর ভর দিন।",
+"মাথা থেকে গোড়ালি পর্যন্ত শরীর সোজা রাখুন।",
+"স্বাভাবিকভাবে শ্বাস নিতে থাকুন।",
+"নির্ধারিত সময় শেষে বিশ্রাম নিন।"
+],
+benefits:[
+"কোর পেশির শক্তি উন্নত করে।",
+"শরীরের স্থিতিশীলতা বাড়ায়।",
+"কাঁধ ও পেটের পেশি সক্রিয় করে।"
+],
+dose:"১০–২০ সেকেন্ড।",
+safety:"কোমর নিচে ঝুলতে দেবেন না।"
+},
+
+{
+name:"Leg Raise",
+bn:"পা উঠানো",
+emoji:"🦿",
+muscles:["Lower Abs","Core","Hip Flexors"],
+steps:[
+"চিত হয়ে মেঝেতে শুয়ে পড়ুন।",
+"দুই পা সোজা রাখুন।",
+"পেটের পেশি শক্ত রেখে ধীরে দুই পা তুলুন।",
+"আরামদায়ক সীমা পর্যন্ত তুলুন।",
+"ধীরে ধীরে পা নিচে নামান।"
+],
+benefits:[
+"পেটের পেশি সক্রিয় করে।",
+"হিপ ফ্লেক্সর পেশি কাজে লাগায়।",
+"কোর নিয়ন্ত্রণ উন্নত করে।"
+],
+dose:"৬–১০ বার।",
+safety:"কোমরে চাপ পড়লে হাঁটু সামান্য ভাঁজ করুন।"
+},
+
+{
+name:"Mountain Climbers",
+bn:"মাউন্টেন ক্লাইম্বার্স",
+emoji:"⛰️",
+muscles:["Core","Shoulders","Thighs"],
+steps:[
+"হাত মেঝেতে রেখে প্ল্যাঙ্ক পজিশনে আসুন।",
+"দুই হাত কাঁধের নিচে রাখুন।",
+"একটি হাঁটু বুকের দিকে আনুন।",
+"পা আবার আগের অবস্থায় নিন।",
+"অন্য হাঁটু বুকের দিকে আনুন।",
+"ধীরে পালাক্রমে করুন।"
+],
+benefits:[
+"কোর ও পায়ের পেশি সক্রিয় করে।",
+"সমন্বয় ও সহনশীলতা বাড়ায়।",
+"হৃদস্পন্দন বাড়াতে সাহায্য করে।"
+],
+dose:"১৫–২০ সেকেন্ড।",
+safety:"শুরুতে ধীরে করুন। কোমর বেশি ওঠাবেন না।"
+},
+
+{
+name:"Donkey Kicks",
+bn:"ডাঙ্কি কিকস",
+emoji:"🐴",
+muscles:["Glutes","Hamstrings","Core"],
+steps:[
+"হাত ও হাঁটুর ওপর ভর দিয়ে থাকুন।",
+"হাত কাঁধের নিচে রাখুন।",
+"একটি হাঁটু ভাঁজ অবস্থায় পেছন থেকে ওপরে তুলুন।",
+"কোমর স্থির রাখুন।",
+"ধীরে পা নামিয়ে অন্য পায়ে করুন।"
+],
+benefits:[
+"নিতম্বের পেশি সক্রিয় করে।",
+"হিপের নিয়ন্ত্রণ উন্নত করে।",
+"কোরের স্থিতিশীলতা বাড়ায়।"
+],
+dose:"প্রতি পায়ে ৮–১২ বার।",
+safety:"পিঠ অতিরিক্ত বাঁকাবেন না।"
+},
+
+{
+name:"Standing Side Bend",
+bn:"দাঁড়িয়ে পাশের দিকে ঝোঁকা",
+emoji:"↔️",
+muscles:["Obliques","Core"],
+steps:[
+"দুই পা স্বাভাবিক দূরত্বে রেখে দাঁড়ান।",
+"এক হাত মাথার ওপরে তুলুন।",
+"ধীরে বিপরীত দিকে শরীর বাঁকান।",
+"কয়েক সেকেন্ড ধরে রাখুন।",
+"মাঝখানে ফিরে অন্য পাশে করুন।"
+],
+benefits:[
+"শরীরের পাশের পেশি প্রসারিত করে।",
+"কোমরের নমনীয়তা উন্নত করে।",
+"শরীরের নড়াচড়ার পরিসর বাড়ায়।"
+],
+dose:"প্রতি পাশে ৮ বার।",
+safety:"সামনে বা পেছনে ঝুঁকবেন না।"
+},
+
+{
+name:"Reverse Crunch",
+bn:"রিভার্স ক্রাঞ্চ",
+emoji:"🔃",
+muscles:["Abs","Core"],
+steps:[
+"চিত হয়ে শুয়ে হাঁটু ভাঁজ করুন।",
+"হাত শরীরের পাশে রাখুন।",
+"পেটের পেশি ব্যবহার করে হাঁটু বুকের দিকে আনুন।",
+"কোমর সামান্য মেঝে থেকে তুলুন।",
+"ধীরে আগের অবস্থায় ফিরে যান।"
+],
+benefits:[
+"পেটের পেশি সক্রিয় করে।",
+"কোর নিয়ন্ত্রণ উন্নত করে।",
+"পেটের পেশির শক্তি বাড়াতে সাহায্য করে।"
+],
+dose:"৮–১২ বার।",
+safety:"ঝাঁকুনি দিয়ে কোমর তুলবেন না।"
+},
+
+{
+name:"Bicycle Crunch",
+bn:"বাইসাইকেল ক্রাঞ্চ",
+emoji:"🚴",
+muscles:["Abs","Obliques","Core"],
+steps:[
+"চিত হয়ে শুয়ে দুই হাত মাথার পাশে রাখুন।",
+"হাঁটু ভাঁজ করে পা সামান্য ওপরে তুলুন।",
+"একটি হাঁটু বুকের দিকে আনুন।",
+"বিপরীত কাঁধ সেই হাঁটুর দিকে ঘোরান।",
+"ধীরে অন্য পাশে একইভাবে করুন।"
+],
+benefits:[
+"পেট ও পাশের পেশি সক্রিয় করে।",
+"কোরের সমন্বয় উন্নত করে।",
+"শরীরের নিয়ন্ত্রণ বাড়ায়।"
+],
+dose:"প্রতি পাশে ৬–১০ বার।",
+safety:"ঘাড়ে টান দেবেন না।"
+},
+
+{
+name:"Fire Hydrant",
+bn:"ফায়ার হাইড্র্যান্ট",
+emoji:"🔥",
+muscles:["Glutes","Hip Abductors","Core"],
+steps:[
+"হাত ও হাঁটুর ওপর ভর দিয়ে শুরু করুন।",
+"একটি হাঁটু ৯০ ডিগ্রি ভাঁজ রাখুন।",
+"কোমর স্থির রেখে হাঁটু পাশের দিকে তুলুন।",
+"আরামদায়ক উচ্চতায় নিয়ে যান।",
+"ধীরে নামিয়ে অন্য পায়ে করুন।"
+],
+benefits:[
+"হিপের পাশের পেশি সক্রিয় করে।",
+"নিতম্বের পেশি শক্তিশালী করে।",
+"ভারসাম্য ও স্থিতিশীলতা উন্নত করে।"
+],
+dose:"প্রতি পায়ে ৮–১২ বার।",
+safety:"শরীর একদিকে কাত করবেন না।"
+},
+
+{
+name:"Superman Hold",
+bn:"সুপারম্যান হোল্ড",
+emoji:"🦸",
+muscles:["Lower Back","Glutes","Back"],
+steps:[
+"উপুড় হয়ে মেঝেতে শুয়ে পড়ুন।",
+"দুই হাত সামনে সোজা রাখুন।",
+"ধীরে হাত ও পা সামান্য ওপরে তুলুন।",
+"ঘাড় স্বাভাবিক অবস্থায় রাখুন।",
+"কয়েক সেকেন্ড ধরে রাখুন।",
+"ধীরে হাত ও পা নামিয়ে দিন।"
+],
+benefits:[
+"পিঠের পেশি সক্রিয় করে।",
+"পেছনের শরীরের শক্তি উন্নত করে।",
+"কোর ও নিতম্বের পেশি কাজে লাগায়।"
+],
+dose:"৫–১০ সেকেন্ড, ৩–৫ বার।",
+safety:"কোমরে ব্যথা হলে করবেন না। অতিরিক্ত উঁচুতে তুলবেন না।"
+}
+
+];
+
+const list=document.getElementById("exerciseList");
+
+let completed=JSON.parse(
+ localStorage.getItem("fitnessDone")||"[]"
+);
+
+function render(){
+
+list.innerHTML="";
+
+exercises.forEach((e,i)=>{
+
+const isDone=completed.includes(i);
+
+const card=document.createElement("div");
+card.className="card";
+card.dataset.name=e.name.toLowerCase();
+
+card.innerHTML=`
+
+<div class="cardhead">
+ <div class="number">${i+1}</div>
+ <div>
+  <h2>${e.emoji} ${e.name}</h2>
+  <p>${e.bn}</p>
+ </div>
+</div>
+
+<div class="content">
+
+<div class="section">
+<h3>📌 Target Muscles</h3>
+${e.muscles.map(m=>`<span class="tag">${m}</span>`).join("")}
+</div>
+
+<div class="section">
+<h3>📝 Step-by-Step Details</h3>
+<ol>${e.steps.map(s=>`<li>${s}</li>`).join("")}</ol>
+</div>
+
+<div class="section">
+<h3>💚 Benefits</h3>
+<ul>${e.benefits.map(b=>`<li>${b}</li>`).join("")}</ul>
+</div>
+
+<div class="section">
+<h3>⏱️ Beginner Practice</h3>
+<p>${e.dose}</p>
+</div>
+
+<div class="section">
+<h3>⚠️ Safety</h3>
+<p>${e.safety}</p>
+</div>
+
+<button class="done ${isDone?"completed":""}"
+onclick="toggleDone(${i})">
+${isDone?"✓ Completed":"☐ Mark as Completed"}
+</button>
+
+</div>
+`;
+
+list.appendChild(card);
+
+});
+
+updateProgress();
+
+}
+
+function toggleDone(i){
+
+if(completed.includes(i)){
+ completed=completed.filter(x=>x!==i);
+}else{
+ completed.push(i);
+}
+
+localStorage.setItem(
+ "fitnessDone",JSON.stringify(completed)
+);
+
+render();
+
+}
+
+function updateProgress(){
+
+let n=completed.length;
+
+document.getElementById("count").innerText=
+ n+" / 14 Completed";
+
+document.getElementById("progressBar").style.width=
+ (n/14*100)+"%";
+
+}
+
+function filterCards(){
+
+let value=document.getElementById("search")
+.value.toLowerCase();
+
+document.querySelectorAll(".card").forEach(card=>{
+
+card.classList.toggle(
+ "hidden",
+ !card.dataset.name.includes(value)
+);
+
+});
+
+}
+
+render();
+
+</script>
+
+</body>
+  </html>
+  
